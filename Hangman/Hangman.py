@@ -1,13 +1,12 @@
 class Hangman:
     #Class variables
-    secretPhrase = "cheongsan"
+    secretPhrase = "anthony sannazzaro"
     guessesLeft = 6
-    guessPhrase = "*********"
+    guessPhrase = ''
     guessList = []
     def __init__(self, playerName):
         self.playerName = playerName
-
-
+   
     def getGuess(self):
         print('__________________________________________________________________')
         print('You have', self.guessesLeft, "guesses left.")
@@ -38,7 +37,7 @@ class Hangman:
             self.checkGuess(guess) #Continue to checking the guess
 
     def checkGuess(self, guess):
-        correctGuessFlag = False #Creare flag
+        correctGuessFlag = False #Create flag
         self.guessList.append(guess) #Add guess to list of already guessed letter
 
         for char in self.secretPhrase:
@@ -77,6 +76,7 @@ class Hangman:
             print('Sorry that letter is not in the phrase.')
 
     def runGame(self):
+        self.gameStart() #Run starting background functionality
         self.showInstructions() #Show player the instructions
         while self.guessesLeft > 0:
             self.getGuess()
@@ -101,9 +101,17 @@ class Hangman:
         print("The game continues until you either guess the phrase or run out of guesses")
         print("Good luck!")
 
+    def gameStart(self):
+        #Run startup functionality
+        tempGuessPhrase = list(self.guessPhrase)
+        for char in self.secretPhrase: #Creating the asteriks for the guessPhrase
+            tempGuessPhrase.append('*')
+
+        self.guessPhrase = "".join([" " if char == " " else "*" for char in self.secretPhrase]) #Joining back to a string
+
+#Main
 userName = input("Enter your name: ")
 h1 = Hangman(userName)
-print(h1.playerName)
 
 h1.runGame()
 

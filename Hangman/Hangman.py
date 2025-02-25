@@ -20,6 +20,7 @@ class Hangman:
         guess = guess.lower() #Converting guess to lowercase
         
         badGuessFlag = False #Creating flag for a bad guess
+        winGameFlag = False #Creating flag for an exact guess
 
         for val in self.guessList: #Check if already guessed
             if guess == val:
@@ -28,13 +29,18 @@ class Hangman:
                 break
         
         if len(guess) != 1 and badGuessFlag == False: #Making sure guess is only 1 letter, can add functionality later to have an or statement for exact guess of phrase
-            print("Your guess must be only 1 letter!")
-            badGuessFlag = True
+            if(guess == self.secretPhrase): #If guess phrase exactly then instant win
+                self.gameWin()
+                winGameFlag = True
+            else:
+                print("Your guess must be only 1 letter!")
+                badGuessFlag = True
 
         if(badGuessFlag):
             self.getGuess() #Retry getting a guess
         else:
-            self.checkGuess(guess) #Continue to checking the guess
+            if(winGameFlag == False):
+                self.checkGuess(guess) #Continue to checking the guess
 
     def checkGuess(self, guess):
         correctGuessFlag = False #Create flag
@@ -96,7 +102,7 @@ class Hangman:
         print("Welcome", self.playerName, "to Hangman")
         print("The object of the game is to guess the hidden phrase")
         print("The phrase will be hidden by asteriks (*)")
-        print("Each round you will enter one letter as a guess")
+        print("Each round you will enter one letter as a guess, or if you think you know it, guess the whole phrase!")
         print("Guess right and you will see the updated phrase, guess wrong and you will lose a guess")
         print("The game continues until you either guess the phrase or run out of guesses")
         print("Good luck!")

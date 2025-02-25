@@ -3,19 +3,35 @@ class Hangman:
     secretPhrase = "cheongsan"
     guessesLeft = 6
     guessPhrase = "*********"
+    guessList = []
     def __init__(self, playerName):
         self.playerName = playerName
 
 
     def getGuess(self):
         print('__________________________________________________________________')
+        print('You have', self.guessesLeft, "guesses left.")
         print(self.guessPhrase)
         guess = input("Enter a guess: ")
         #input validation on the guess (1 character, not a number, not already guessed, etc)
-        self.checkGuess(guess)
+        
+        guess = guess.lower() #Converting guess to lowercase
+        
+        alreadyGuessedFlag = False
+        for val in self.guessList: #Check if already guessed
+            if guess == val:
+                print("You already guessed this letter!")
+                alreadyGuessedFlag = True
+        
+        if(alreadyGuessedFlag):
+            self.getGuess() #Retry getting a guess
+        else:
+            self.checkGuess(guess) #Continue to checking the guess
 
     def checkGuess(self, guess):
-        correctGuessFlag = False
+        correctGuessFlag = False #Creare flag
+        self.guessList.append(guess) #Add guess to list of already guessed letter
+
         for char in self.secretPhrase:
             if(char == guess): #Guessed a letter correct
                 correctGuessFlag = True
@@ -50,7 +66,6 @@ class Hangman:
             self.gameOver()
         else:
             print('Sorry that letter is not in the phrase.')
-            print('Guesses Left: ', self.guessesLeft)
 
     def runGame(self):
         self.showInstructions() #Show player the instructions

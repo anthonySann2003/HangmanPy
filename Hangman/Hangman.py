@@ -1,14 +1,15 @@
 class Hangman:
     #Class variables
-    secretPhrase = "theo"
-    guessesLeft = 3
-    guessPhrase = "****"
+    secretPhrase = "cheongsan"
+    guessesLeft = 6
+    guessPhrase = "*********"
     def __init__(self, playerName):
         self.playerName = playerName
 
 
     def getGuess(self):
         print('__________________________________________________________________')
+        print(self.guessPhrase)
         guess = input("Enter a guess: ")
         #input validation on the guess (1 character, not a number, not already guessed, etc)
         self.checkGuess(guess)
@@ -52,6 +53,7 @@ class Hangman:
             print('Guesses Left: ', self.guessesLeft)
 
     def runGame(self):
+        self.showInstructions() #Show player the instructions
         while self.guessesLeft > 0:
             self.getGuess()
 
@@ -65,6 +67,15 @@ class Hangman:
         print("Congratulations you won!")
         print("The phrase was:", self.secretPhrase)
         self.guessesLeft = 0 #Setting to 0 so game ends
+
+    def showInstructions(self):
+        print("Welcome", self.playerName, "to Hangman")
+        print("The object of the game is to guess the hidden phrase")
+        print("The phrase will be hidden by asteriks (*)")
+        print("Each round you will enter one letter as a guess")
+        print("Guess right and you will see the updated phrase, guess wrong and you will lose a guess")
+        print("The game continues until you either guess the phrase or run out of guesses")
+        print("Good luck!")
 
 userName = input("Enter your name: ")
 h1 = Hangman(userName)

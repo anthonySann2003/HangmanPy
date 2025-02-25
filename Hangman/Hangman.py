@@ -13,17 +13,26 @@ class Hangman:
         print('You have', self.guessesLeft, "guesses left.")
         print(self.guessPhrase)
         guess = input("Enter a guess: ")
-        #input validation on the guess (1 character, not a number, not already guessed, etc)
         
+        self.validateGuess(guess) #Call validate guess
+
+    def validateGuess(self, guess):
+        #input validation on the guess (1 character, not a number, not already guessed, etc)        
         guess = guess.lower() #Converting guess to lowercase
         
-        alreadyGuessedFlag = False
+        badGuessFlag = False #Creating flag for a bad guess
+
         for val in self.guessList: #Check if already guessed
             if guess == val:
                 print("You already guessed this letter!")
-                alreadyGuessedFlag = True
+                badGuessFlag = True
+                break
         
-        if(alreadyGuessedFlag):
+        if len(guess) != 1 and badGuessFlag == False: #Making sure guess is only 1 letter, can add functionality later to have an or statement for exact guess of phrase
+            print("Your guess must be only 1 letter!")
+            badGuessFlag = True
+
+        if(badGuessFlag):
             self.getGuess() #Retry getting a guess
         else:
             self.checkGuess(guess) #Continue to checking the guess

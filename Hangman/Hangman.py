@@ -1,3 +1,6 @@
+from sympy import Q
+
+
 class Hangman:
     #Class variables
     secretPhrase = "anthony sannazzaro"
@@ -32,7 +35,8 @@ class Hangman:
             if(guess == self.secretPhrase): #If guess phrase exactly then instant win
                 self.gameWin()
                 winGameFlag = True
-            else:
+
+            if(len(guess) != len(self.secretPhrase)):
                 print("Your guess must be only 1 letter!")
                 badGuessFlag = True
 
@@ -54,7 +58,7 @@ class Hangman:
         if(correctGuessFlag):
             self.updatePhrase(guess)
         else:
-            self.updateBoard()
+            self.updateBoard(guess)
 
     def updatePhrase(self, guess):
         #Loop through guessPhrase and change * to correct letter where guessed
@@ -72,14 +76,17 @@ class Hangman:
             print("You guessed correctly!")
             print(self.guessPhrase)
 
-    def updateBoard(self):
+    def updateBoard(self, guess):
         #Update the guessesLeft and hangman ascii
         self.guessesLeft = self.guessesLeft - 1 #Update guesses left
 
         if(self.guessesLeft == 0): #Checking if out of guesses
             self.gameOver()
         else:
-            print('Sorry that letter is not in the phrase.')
+            if(len(guess) != 1):
+                print("Thats not it, but good guess!")
+            else:
+                print('Sorry that letter is not in the phrase.')
 
     def runGame(self):
         self.gameStart() #Run starting background functionality

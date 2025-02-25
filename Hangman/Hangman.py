@@ -18,6 +18,7 @@ class Hangman:
             if(char == guess): #Guessed a letter correct
                 print('Correct Guess')
                 correctGuessFlag = True
+                break
 
         if(correctGuessFlag):
             self.updatePhrase(guess)
@@ -26,7 +27,15 @@ class Hangman:
 
     def updatePhrase(self, guess):
         #Loop through guessPhrase and change * to correct letter where guessed
+        updatedPhrase = list(self.guessPhrase) #Changing guessPhrase to a list because strings are immutable
         print('Updating Phrase')
+
+        for i, char in enumerate(self.secretPhrase):
+            if char == guess:
+                updatedPhrase[i] = guess #Replacing * with correct letter
+
+        self.guessPhrase = "".join(updatedPhrase)
+        print(self.guessPhrase)
 
     def updateBoard(self):
         #Update the guessesLeft and hangman ascii
